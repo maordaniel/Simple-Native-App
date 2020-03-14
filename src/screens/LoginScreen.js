@@ -38,33 +38,37 @@ function LoginScreen(props) {
         }
         if (successPhoneNumber && successPassword){
             setErrorPassword('');
-            const data ={_id:phoneNumber, Password:password};
-            const res = await PostData('/login',data);
-            if(res.status === 201){
-                props.login();
-                props.username(res.data['name']);
-                props.authLoginDetails(data);
-                RNAlert.alert(
-                res.data['alert'],
-                '',
-                [
-                {
-                  text: 'Ok',
-                  onPress: () => navigate('Home'),
-                },
-              ],
-        );
-            }else {
-            RNAlert.alert(
-            res.data,
-            '',
-            [
-            {
-              text: 'סגור',
-              onPress: () => console.log('canceled'),
-            },
-          ],
-        );
+            try{
+                const data ={_id:phoneNumber, Password:password};
+                const res = await PostData('/login',data);
+                if(res.status === 201){
+                    props.login();
+                    props.username(res.data['name']);
+                    props.authLoginDetails(data);
+                    RNAlert.alert(
+                    res.data['alert'],
+                    '',
+                    [
+                    {
+                      text: 'Ok',
+                      onPress: () => navigate('Home'),
+                    },
+                    ],
+                    );
+                }else {
+                    RNAlert.alert(
+                    res.data,
+                    '',
+                    [
+                    {
+                      text: 'סגור',
+                      onPress: () => console.log('canceled'),
+                    },
+                      ],
+                    );
+                }
+            }catch (e) {
+                console.log(e);
             }
         }
     };
