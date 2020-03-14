@@ -44,8 +44,9 @@ function RegistrationScreen(props) {
             setErrorPassword('');
             const registerData ={ _id:phoneNumber, Name:fullName, Password:password};
             const loginData ={ _id:phoneNumber, Password:password};
-            const res1 = await PostData('/register',registerData);
-            if (res1.status === 201) {
+            try {
+                const res1 = await PostData('/register',registerData);
+                if (res1.status === 201) {
                 const res2 = await PostData('/login',loginData);
                 if(res2.status === 201) {
                     props.login();
@@ -62,6 +63,9 @@ function RegistrationScreen(props) {
                         },
                     ],
                 );
+                }
+            }catch (e) {
+                console.log(e);
             }
         }
     };
