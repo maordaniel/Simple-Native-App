@@ -38,8 +38,8 @@ function LoginScreen(props) {
         }
         if (successPhoneNumber && successPassword){
             setErrorPassword('');
+            const data ={_id:phoneNumber, Password:password};
             try{
-                const data ={_id:phoneNumber, Password:password};
                 const res = await PostData('/login',data);
                 if(res.status === 201){
                     props.login();
